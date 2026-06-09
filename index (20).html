@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Plus | 50-State Incentive Master</title>
+<style>
+  :root{
+    --bg:#0a1422;--bg2:#0e1c30;--card:#15263f;--card2:#1b3050;--card3:#21385a;
+    --line:#2a3f5c;--head:#f0f3f7;--body:#d6dfea;--soft:#aebccc;
+    --gold:#cbb079;--mint:#5ec39f;--blue:#7aa6d6;--redsoft:#e08a8a;--emptyseg:#33455f;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--body);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:780px;margin:0 auto;padding:20px 14px 90px;}
+
+  header.masthead{background:linear-gradient(150deg,#102036,#1b3050);border:1px solid var(--line);border-radius:16px;padding:26px 22px;margin-bottom:18px;}
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  header.masthead h1{margin:10px 0 8px;font-size:27px;line-height:1.25;font-weight:700;color:var(--head);}
+  header.masthead p{margin:0;color:var(--soft);font-size:17px;}
+  .tagline{margin-top:16px;font-size:14px;color:var(--soft);border-top:1px solid var(--line);padding-top:14px;}
+
+  h2.section{font-size:22px;margin:30px 0 4px;color:var(--head);font-weight:700;border-left:5px solid var(--gold);padding-left:14px;line-height:1.3;}
+  .sectionsub{color:var(--soft);font-size:16px;margin:6px 0 16px;padding-left:19px;}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;font-size:17px;}
+  .panel b{color:var(--head);}
+  .formula{display:block;background:#0c1f38;color:var(--head);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:18px;font-weight:700;margin:12px 0;text-align:center;line-height:1.4;}
+  .formula .g{color:var(--gold);}
+  .legend{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .lg{font-size:15px;font-weight:700;padding:10px 14px;border-radius:10px;display:flex;align-items:center;gap:10px;}
+  .lg .dot{width:14px;height:14px;border-radius:50%;flex:none;}
+  .lg.v{background:rgba(94,195,159,.14);color:var(--mint);} .lg.v .dot{background:var(--mint);}
+  .lg.s{background:rgba(122,166,214,.14);color:var(--blue);} .lg.s .dot{background:var(--blue);}
+  .lg.m{background:rgba(203,176,121,.14);color:var(--gold);} .lg.m .dot{background:var(--gold);}
+  .lg.w{background:rgba(224,138,138,.14);color:var(--redsoft);} .lg.w .dot{background:var(--redsoft);}
+
+  /* shared collapsibles */
+  details.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2px 20px;margin-bottom:14px;}
+  details.box>summary{cursor:pointer;font-weight:700;color:var(--gold);font-size:18px;padding:16px 0;list-style:none;position:relative;padding-right:34px;}
+  details.box>summary::-webkit-details-marker{display:none;}
+  details.box>summary::after{content:"+";position:absolute;right:2px;top:13px;font-size:27px;color:var(--gold);font-weight:400;}
+  details.box[open]>summary::after{content:"\2013";}
+  details.box .bc{font-size:16.5px;color:var(--body);padding-bottom:16px;}
+  details.box .bc h4{color:var(--head);margin:16px 0 4px;font-size:17px;}
+  .eqbox{background:#0c1f38;color:var(--head);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px;line-height:1.5;overflow-x:auto;}
+  .eqbox .out{color:var(--gold);font-weight:700;}
+
+  /* target playbook cards */
+  .tgt{background:var(--card2);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:11px;padding:13px 15px;margin:10px 0;}
+  .tgt .tt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .tgt .tn{font-size:17px;font-weight:700;color:var(--head);}
+  .tgt .tscore{font-size:17px;font-weight:800;color:var(--gold);flex:none;}
+  .tgt .tmeta{font-size:14px;color:var(--soft);margin-top:5px;}
+  .tgt .tmeta b{color:var(--mint);}
+  .tgt .twhy{font-size:15px;color:var(--body);margin-top:7px;line-height:1.5;}
+  .tgt .trk{font-size:13px;color:var(--gold);font-weight:800;}
+
+  /* STATE ACCORDIONS */
+  .acc{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:13px;overflow:hidden;scroll-margin-top:10px;}
+  .acc.t-v{border-left:7px solid var(--mint);}
+  .acc.t-s{border-left:7px solid var(--blue);}
+  .acc.t-m{border-left:7px solid var(--gold);}
+  .acc.t-w{border-left:7px solid var(--redsoft);}
+  .acc>summary{cursor:pointer;list-style:none;padding:17px 18px;}
+  .acc>summary::-webkit-details-marker{display:none;}
+  .acchead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .ahleft{min-width:0;}
+  .ahrank{font-size:14px;font-weight:700;color:var(--soft);}
+  .ahname{font-size:23px;font-weight:800;color:var(--head);line-height:1.15;margin:1px 0 2px;}
+  .ahhome{font-size:14px;color:var(--mint);font-weight:700;}
+  .ahbadge{display:inline-block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:4px 10px;border-radius:8px;margin-top:6px;}
+  .ahbadge.t-v{background:rgba(94,195,159,.16);color:var(--mint);}
+  .ahbadge.t-s{background:rgba(122,166,214,.16);color:var(--blue);}
+  .ahbadge.t-m{background:rgba(203,176,121,.16);color:var(--gold);}
+  .ahbadge.t-w{background:rgba(224,138,138,.16);color:var(--redsoft);}
+  .ahright{text-align:right;flex:none;}
+  .ahscore{font-size:40px;font-weight:800;color:var(--head);line-height:.9;}
+  .ahscorelab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--soft);margin-top:3px;}
+  .ahopen{font-size:13px;color:var(--gold);font-weight:700;margin-top:8px;}
+  .acc[open]>summary .ahopen::before{content:"\2013 Tap to close";}
+  .acc:not([open])>summary .ahopen::before{content:"+ Tap to open";}
+
+  /* meters */
+  .meters{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
+  .meter{display:flex;align-items:center;gap:9px;}
+  .mlabel{font-size:14px;font-weight:700;color:var(--soft);width:54px;flex:none;}
+  .segs{display:flex;gap:4px;flex:none;}
+  .segs span{width:20px;height:12px;border-radius:3px;background:var(--emptyseg);}
+  .segs span.on.hi{background:var(--mint);} .segs span.on.mid{background:var(--gold);} .segs span.on.lo{background:var(--redsoft);}
+  .mnum{font-size:15px;font-weight:800;color:var(--head);}
+
+  .accbody{padding:2px 18px 18px;border-top:1px solid var(--line);}
+  .row{padding:15px 0;border-bottom:1px solid var(--line);}
+  .row:last-of-type{border-bottom:none;}
+  .row .k{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--gold);margin-bottom:6px;}
+  .row .val{font-size:16.5px;color:var(--body);line-height:1.6;}
+  .row .val b{color:var(--head);}
+  .row .val code{font-family:"SF Mono",ui-monospace,monospace;font-size:14.5px;background:#0c1f38;border:1px solid var(--line);padding:2px 6px;border-radius:5px;color:var(--gold);}
+  .row.pay{background:rgba(94,195,159,.07);margin:0 -18px;padding:15px 18px;} .row.pay .k{color:var(--mint);}
+  .row.watch .k{color:var(--redsoft);}
+
+  /* nested master plan */
+  details.plan{background:var(--card2);border:1px solid var(--line);border-radius:13px;margin-top:14px;padding:2px 16px;}
+  details.plan>summary{cursor:pointer;list-style:none;font-size:17px;font-weight:800;color:var(--gold);padding:15px 30px 15px 0;position:relative;}
+  details.plan>summary::-webkit-details-marker{display:none;}
+  details.plan>summary::after{content:"+";position:absolute;right:2px;top:12px;font-size:25px;color:var(--gold);font-weight:400;}
+  details.plan[open]>summary::after{content:"\2013";}
+  .planbody{padding-bottom:16px;}
+  .pstart{background:rgba(203,176,121,.1);border:1px solid rgba(203,176,121,.3);border-radius:10px;padding:13px 15px;font-size:16.5px;color:var(--body);margin-bottom:14px;}
+  .pstart b{color:var(--gold);}
+  .plabel{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--mint);margin:16px 0 8px;}
+  ol.checklist{margin:0;padding:0;list-style:none;counter-reset:step;}
+  ol.checklist li{counter-increment:step;position:relative;padding:10px 0 10px 42px;border-bottom:1px solid var(--line);font-size:16px;line-height:1.5;}
+  ol.checklist li:last-child{border-bottom:none;}
+  ol.checklist li::before{content:counter(step);position:absolute;left:0;top:9px;width:28px;height:28px;background:var(--card3);color:var(--gold);font-weight:800;font-size:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .ptargets{margin-top:6px;}
+  .ptn{font-size:16px;color:var(--body);line-height:1.6;}
+  .ptn b{color:var(--head);}
+  .verify{background:rgba(224,138,138,.08);border:1px solid rgba(224,138,138,.3);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:16px;color:var(--body);}
+  .verify b{color:var(--redsoft);} .verify ul{margin:8px 0 0;padding-left:22px;} .verify li{margin-bottom:7px;line-height:1.5;}
+  .prov-note{font-size:14.5px;color:var(--soft);font-style:italic;margin-top:12px;line-height:1.5;}
+
+  footer{margin-top:30px;font-size:14px;color:var(--soft);border-top:1px solid var(--line);padding-top:18px;line-height:1.6;}
+  footer b{color:var(--body);}
+  @media(min-width:620px){.ahname{font-size:25px;} .ahscore{font-size:46px;}}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+
+  <header class="masthead">
+    <div class="eyebrow">Energy Plus &middot; 50-State Master</div>
+    <h1>Utility Incentive Pursuit: The Master Plan</h1>
+    <p>All 50 states, value ranked. Tap a state to see the overview, then open its master plan for where to start, the checklist, and which businesses to pursue first.</p>
+    <div class="tagline">Independent Energy Solutions Partner &middot; Daniel Gutierrez, CEO + Founder &middot; June 2026</div>
+  </header>
+
+  <h2 class="section">How states are scored</h2>
+  <div class="panel">
+    <span class="formula"><span class="g">Ease</span> &times; <span class="g">Value</span> &times; <span class="g">Profit</span> = Score</span>
+    <p style="margin:6px 0 4px;font-size:16px;">Each axis runs 1 to 5. The colored bars on every state make the three scores visible at a glance: <b style="color:var(--mint);">green</b> is strong (4 to 5), <b style="color:var(--gold);">gold</b> is middling (3), <b style="color:var(--redsoft);">red</b> is weak (1 to 2).</p>
+    <div class="legend">
+      <span class="lg v"><span class="dot"></span>Verified, full sourced detail</span>
+      <span class="lg s"><span class="dot"></span>Provisional, strong program state</span>
+      <span class="lg m"><span class="dot"></span>Provisional, moderate program state</span>
+      <span class="lg w"><span class="dot"></span>Provisional, weak or no program</span>
+    </div>
+  </div>
+
+  <details class="box">
+    <summary>The measurement framework (same in every state)</summary>
+    <div class="bc">
+      <p>Every custom program uses the same method, so the measurement answers do not change by state. Only the dollars and timing do.</p>
+      <h4>The savings equation</h4>
+      <div class="eqbox"><span class="out">Annual kWh saved</span> = ( kW before &minus; kW after ) &times; yearly run hours</div>
+      <p>Log the power before and after on the equipment, multiply the drop by run hours. Whole-building work compares the utility meter before and after instead.</p>
+      <h4>What to measure with, and how long</h4>
+      <p>A calibrated power logger, cellular or standalone is your choice. Duration depends on how much the load varies: a few days to two weeks for steady loads, two to four weeks for cyclical loads, up to a full year for whole-building or California's measured path. Log until the data is solid to 90 percent confidence and 10 percent precision.</p>
+      <h4>How incentives are set</h4>
+      <p>Either a rate per kWh saved, or a percentage of project cost up to a cap. A program uses one, not both. Getting pre-approved before you start work is required on every custom path.</p>
+    </div>
+  </details>
+
+  <details class="box">
+    <summary>Target customer playbook (who to pursue, ranked)</summary>
+    <div class="bc">
+      <p>The same scoring logic, applied to customer types. Conversation ease is how reachable and motivated the decision-maker is. Tech fit is how well our stack (HVAC optimizer, solar thermal, CryogenX4, harmonizers) produces measurable savings there. Multiplied, they set the order. The kWh band tells you whether a site clears thresholds like Illinois's 500,000 kWh upfront rule.</p>
+      <div id="targets"></div>
+      <p style="margin-top:14px;font-size:15px;color:var(--soft);">Note: CryogenX4 risks being classed as maintenance in some programs, so on refrigeration targets it should ride inside a larger measured retrofit, not lead. Harmonizers rarely clear kWh rebates and belong in demand-charge conversations.</p>
+    </div>
+  </details>
+
+  <h2 class="section">All 50 states, value ranked</h2>
+  <p class="sectionsub">Tap any state to open it. Inside, open the master plan for the checklist and target businesses.</p>
+  <div id="list"></div>
+
+  <footer>
+    <p><b>Sourcing and limits.</b> Verified states (Illinois, New York, California, Texas, North Carolina, South Carolina) reflect current program materials confirmed across this analysis. Provisional rankings are anchored to the ACEEE 2025 State Energy Efficiency Scorecard and known regulatory structure. Target-business rankings combine conversation accessibility with Energy Plus technology fit and are a planning guide, not a guarantee. Rates, caps, budgets, and timing change by program year; confirm live figures with each administrator before quoting a client.</p>
+    <p style="margin-top:10px;"><b>Energy Plus LLC</b> &middot; Independent Energy Solutions Partner &middot; Daniel Gutierrez, CEO + Founder</p>
+  </footer>
+
+</div>
+
+<script>
+// ---------- GLOBAL TARGET PLAYBOOK ----------
+const targets = [
+  {n:"Hotels & hospitality",c:4,t:5,lead:"HVAC optimizer + solar thermal (hot water)",kwh:"High, usually 500k+",why:"Huge simultaneous cooling and hot-water load running 24/7, and the GM or owner is reachable and opex-motivated. The strongest all-around fit."},
+  {n:"Senior living & assisted living",c:4,t:4,lead:"HVAC optimizer + solar thermal",kwh:"High, often 500k+",why:"24/7 conditioning and hot water, owner-operators are reachable and cost-driven, and the care mission makes for warm conversations."},
+  {n:"Fitness centers & health clubs",c:4,t:4,lead:"Solar thermal (pool & water) + HVAC",kwh:"Moderate to high",why:"Pool and shower heating plus long operating hours, with an accessible owner or manager."},
+  {n:"Supermarkets & grocery",c:3,t:5,lead:"CryogenX4 (refrigeration) + HVAC",kwh:"High, usually 500k+",why:"Refrigeration dominates the load and coil performance is everything, so results are large. Conversations run through a regional facilities manager."},
+  {n:"Houses of worship & large churches",c:5,t:3,lead:"HVAC optimizer",kwh:"Often under 500k",why:"The easiest conversations given existing relationships and mission alignment, though intermittent use caps savings and many sites fall below upfront thresholds."},
+  {n:"Cold storage & refrigerated warehouse",c:3,t:5,lead:"CryogenX4 + HVAC",kwh:"Very high",why:"Refrigeration is essentially the whole load, so measured savings are large. Decision-maker is a facilities or operations manager."},
+  {n:"Office buildings (mid to large)",c:3,t:4,lead:"HVAC optimizer",kwh:"Moderate to high",why:"Cooling-dominated with long weekday hours. Reached through property managers, who care about NOI."},
+  {n:"Multifamily (large) & apartments",c:3,t:4,lead:"Solar thermal (hot water) + common-area HVAC",kwh:"Moderate to high",why:"Central hot water is a big, steady load. Reached through property management companies."},
+  {n:"Restaurants (full-service & chains)",c:4,t:3,lead:"CryogenX4 + HVAC + solar thermal",kwh:"Often under 500k per site",why:"Real refrigeration and hot-water load, owners are reachable, but per-site savings are smaller and many sites miss upfront thresholds."},
+  {n:"Data centers",c:2,t:5,lead:"HVAC / cooling optimizer + CryogenX4 on coils",kwh:"Very high",why:"Cooling load is enormous and runs nonstop, so savings are huge, but operators are sophisticated and hard to penetrate."},
+  {n:"Hospitals & healthcare",c:2,t:5,lead:"HVAC optimizer + solar thermal",kwh:"Very high",why:"Massive 24/7 cooling, hot water, and sterilization load, but long procurement cycles and facilities committees slow the entry."},
+  {n:"Manufacturing & industrial",c:3,t:3,lead:"HVAC + process cooling (not harmonizers for rebates)",kwh:"Very high",why:"Large loads and, in Illinois, compressed air pays a high custom rate. Power-factor harmonizers do not clear kWh rebates, so lead with process and HVAC."}
+];
+
+// ---------- STATE DATA ----------
+const states = [
+  {n:"Illinois",ab:"IL",tier:"v",e:4,v:5,p:4,util:"ComEd, Ameren",lead:"ComEd EE Program, Custom",
+   basis:"Custom, percent of project cost",
+   qualify:"Register as an Energy Efficiency Service Provider; ICC certification (renewed yearly) for measures above a small threshold. Free ComEd facility assessment seeds the savings estimate. Pre-approval and an incentive reservation required before work; reservation allows 90 days to complete.",
+   measure:"Option A or B retrofit isolation on HVAC and controls. Calibrated power logger, weeks of capture, 90/10 sampling on populations.",
+   formula:"Incentive = rate \u00d7 first-year kWh saved. Rate ~$0.07/kWh general; higher by category (compressed air $0.18). Cap: lesser of the rate calc or 75% of project cost (up to 100% for industrial custom). Adders for small business and public stack up to +60%.",
+   pay:"Checks 4 to 6 weeks after final approval (6 to 10 in peak periods). Realistic install-to-cash about 6 to 12 weeks.",
+   upfront:"YES. Early Commitment pays $0.06/kWh of estimated first-year savings at approval, before the post-period, for projects estimated above 500,000 kWh.",
+   watch:"Budget is first-come and runs out; apply early in the program year.",
+   plan:{start:"Register as a ComEd Energy Efficiency Service Provider, then book the free facility assessment on your first high-consumption target site.",
+     checklist:["Register as a ComEd Service Provider and get ICC certification if installing above the threshold","Build a target list of sites above 500,000 kWh per year to unlock the upfront Early Commitment","Request the free ComEd facility assessment to get a program-blessed savings estimate","Submit pre-approval with the savings calc and M&V plan before any work begins","Lock the incentive reservation (90-day clock starts)","Install, then run the before-and-after metering per the plan","Submit the final application with measured kWh","Collect the check, 4 to 6 weeks after approval"],
+     targetNote:"For the $0.06/kWh upfront, prioritize the 500k-plus-kWh types from the playbook: hotels, supermarkets, cold storage, hospitals, large offices, senior living, data centers, and manufacturing. Lead the HVAC optimizer on cooling-heavy hotels and offices. On supermarkets and cold storage, frame CryogenX4 as a measured efficiency retrofit, not maintenance. Manufacturing with compressed air is a standout here because that custom category pays $0.18/kWh. Smaller churches and single restaurants still qualify for standard incentives but usually miss the upfront threshold."}},
+
+  {n:"New York",ab:"NY",tier:"v",e:4,v:4,p:4,util:"Con Edison, NYSERDA",lead:"Con Ed C&I, prescriptive or custom",
+   basis:"Prescriptive (NY TRM) or custom calc",
+   qualify:"Choose the lane, file a short application, work with an assigned Energy Advisor including a site visit. Custom measures need the savings calc approved before completion.",
+   measure:"Prescriptive needs no metering. Custom uses Option A or B, calibrated logger, short-term capture, 90/10 sampling.",
+   formula:"Prescriptive = deemed $/unit from the NY TRM. Custom = rate \u00d7 kWh saved, set per project. Stacks with NYSERDA, which raises the combined ceiling.",
+   pay:"Paid after the project is approved and complete, to the customer or assigned to the contractor. Confirm the processing lag with the Energy Advisor.",
+   upfront:"No standard upfront. Assign payment to Energy Plus to control cash flow.",
+   watch:"The competitive total depends on stacking the NYSERDA layer; design for both.",
+   plan:{start:"File a Con Edison C&I application on a flagship site and get the assigned Energy Advisor on a site visit.",
+     checklist:["Pick the lane: prescriptive for listed measures, custom for everything else","File the application and schedule the Energy Advisor site visit","For custom, get the savings calc approved before the project is completed","Install and document","Assign the incentive payment to Energy Plus","Layer the NYSERDA program where the building adds solar thermal or electrifies"],
+     targetNote:"New York's building stock favors hotels, large multifamily, and offices. Solar thermal is especially strong on NYC hotel and multifamily hot-water loads. Hospitals and senior living are high-value but slower to enter. Use the NYSERDA stack to lift the total wherever a clean-heat angle exists."}},
+
+  {n:"California",ab:"CA",tier:"v",e:2,v:4,p:4,util:"PG&E, SCE, SDG&E",lead:"Calculated + Measured (pay for performance)",
+   basis:"Custom calc, or meter-based measured",
+   qualify:"Calculated path needs engineering and pre-approval. Measured path reserves an incentive from a designed estimate, then proves it at the smart meter. Best entered through an established implementer.",
+   measure:"Calculated: Option A/B isolation, short-term logger. Measured: no site metering, the utility AMI meter is read across a 12-month verification period.",
+   formula:"Incentive = rate \u00d7 metered kWh saved. ~$0.08 to $0.12/kWh, rising to $0.20+ for peak-hour savings because the rate tracks hourly avoided cost.",
+   pay:"Calculated is about 1 to 3 months after install verification. Measured verifies over 12 months, paid quarterly.",
+   upfront:"YES via an implementer, who can advance the projected incentive at install to offset the year-long tail.",
+   watch:"Ease scored 2 because the measured path takes a full year to cash flow, the slowest in the set and a real financing drag. Use the implementer upfront advance to offset it. Highest engineering bar in the verified set; target peak-heavy cooling.",
+   plan:{start:"Partner with an established California implementer first, so you inherit the upfront-advance capability and the meter-based M&V machinery instead of building them.",
+     checklist:["Select and sign with a California program implementer","Identify peak-heavy cooling sites where afternoon savings earn the rate premium","Produce the design estimate and reserve the incentive","Negotiate the implementer upfront advance to compress cash timing","Install","Run the 12-month meter verification","Collect quarterly performance payments, net of any advance"],
+     targetNote:"Chase peak-hour cooling reductions, where the rate climbs past $0.20/kWh: hotels, large offices, data centers, supermarkets, and cold storage. The HVAC optimizer cutting afternoon cooling load is the ideal measure. Given the slow cash, only pursue here behind an implementer advance."}},
+
+  {n:"South Carolina",ab:"SC",tier:"v",e:3,v:4,p:3,home:true,util:"Duke Energy",lead:"Duke Smart $aver Custom",
+   basis:"Custom, percent of incremental cost",
+   qualify:"Customer must be on the efficiency rider. Pre-approval before work; pre-qual valid 90 days; approval averages about 20 days. Duke supplies free calculation tools.",
+   measure:"Option A retrofit isolation typical for HVAC; calibrated logger, short capture, 90/10 sampling.",
+   formula:"Incentive = Duke's calculated value on kWh and kW saved, capped at 75% of incremental cost. Screen: simple payback must be one year or greater.",
+   pay:"Submit within 60 days of completion. Checks 4 to 6 weeks after a complete approved application; custom install-to-cash about 2 to 3 months. Assignable.",
+   upfront:"No upfront cash; assign as an invoice credit to cut the client's out-of-pocket.",
+   watch:"Home market, lowest cost to win. SC Energy Security Act is a tailwind. Excludes solar PV generation, fuel switching, and measures not sustainable over time (a flag for CryogenX4 and harmonizers).",
+   plan:{start:"Treat South Carolina as the proving ground. Build one clean, repeatable Duke custom packet here, then scale it. Always pre-approve before touching the equipment.",
+     checklist:["Confirm the customer is on the efficiency rider and has not opted out","Run Duke's free calculation tool to size the savings and incentive","Submit pre-approval and wait for written approval (about 20 days) before any work","Install","Run the before-and-after metering","Submit within 60 days of completion","Assign the incentive to Energy Plus as an invoice credit","Collect, 4 to 6 weeks after a complete approved application"],
+     targetNote:"Lean on the home-market network. Houses of worship are the easiest conversations and a natural first set, though watch the one-year-payback screen and that many sites are smaller. Hotels, senior living, and fitness clubs are the strongest paying targets. Lead the HVAC optimizer and solar thermal. Do not lead CryogenX4 here because of the not-sustainable-over-time exclusion."}},
+
+  {n:"North Carolina",ab:"NC",tier:"v",e:3,v:4,p:3,util:"Duke Energy",lead:"Duke Smart $aver Custom",
+   basis:"Custom, percent of incremental cost",
+   qualify:"On the efficiency rider, pre-approval before work, pre-qual 90 days, about 20-day approval, free calculation tools. Express lane skips pre-approval for lighting under 700,000 kWh.",
+   measure:"Option A isolation typical; calibrated logger, short capture, 90/10 sampling.",
+   formula:"Incentive = Duke's calculated value on kWh and kW saved, capped at 75% of incremental cost. Payback-must-exceed-one-year screen.",
+   pay:"Submit within 180 days of completion. Checks 4 to 6 weeks after approval; custom install-to-cash about 2 to 3 months. Assignable.",
+   upfront:"No upfront cash; assignable invoice credit.",
+   watch:"Business incentives rose about 20 to 25% in 2025. Same exclusions as SC.",
+   plan:{start:"Run North Carolina as one motion with South Carolina, since the program is identical. Reuse the SC packet.",
+     checklist:["Confirm the customer is on the efficiency rider","Size the project in Duke's calculation tool","Submit pre-approval before work (lighting under 700,000 kWh can skip it via the express lane)","Install","Meter before and after","Submit within 180 days of completion","Assign payment to Energy Plus","Collect, 4 to 6 weeks after approval"],
+     targetNote:"Larger Charlotte and Raleigh commercial base widens the pool: hotels, large offices, senior living, supermarkets, and multifamily. Same product guidance as SC, lead HVAC optimizer and solar thermal, keep CryogenX4 out of the lead role."}},
+
+  {n:"Texas",ab:"TX",tier:"v",e:3,v:3,p:3,util:"Oncor, CenterPoint",lead:"Commercial Standard Offer + Custom",
+   basis:"Deemed (TRM), or measured custom",
+   qualify:"Register as a Service Provider; carry $1M general liability. File initial application to block funds; pass a pre-installation inspection; do not start work until approved. Custom Option requires at least $10,000 in measured incentive.",
+   measure:"Standard Offer: no metering, photos and inspection. Custom: IPMVP-consistent plan, Option A/B. State evaluator inspects a sample.",
+   formula:"Deemed = ($/kW \u00d7 kW) + ($/kWh \u00d7 kWh). DX AC ~$295/kW + $0.095/kWh; VFD ~$285/kW + $0.086/kWh. +15% adder outside the Dallas-Fort Worth metroplex.",
+   pay:"Paid after the Savings Report is approved post-inspection, in one check directly to the service provider. About 4 to 8 weeks for deemed.",
+   upfront:"No, but cash lands with Energy Plus as the provider.",
+   watch:"Annual budget gate: final reports by about mid-November to be paid that year, and only while funds remain. Excludes repair, maintenance, behavioral; do not lead with CryogenX4. Capped at 20% of program budget per provider.",
+   plan:{start:"Register as a service provider with both Oncor and CenterPoint, get insured, and apply the moment the program opens in the first quarter before budgets draw down.",
+     checklist:["Register as an Oncor and CenterPoint Service Provider","Carry the required $1M general liability insurance","File the initial application to block funds","Pass the pre-installation inspection and do not start work until approved","Install","Pass the post-inspection so the Savings Report generates","Get the Savings Report approved","Collect one check directly to Energy Plus, about 4 to 8 weeks"],
+     targetNote:"Texas rewards speed. Lead with deemed measures (DX AC, VFDs) on hotels, offices, retail, and conditioned warehouses for fast cash with no metering. Use the custom option for the HVAC optimizer once a project clears $10,000 in incentive. Do not lead CryogenX4 here, it reads as maintenance and is excluded."}},
+
+  {n:"Massachusetts",ab:"MA",tier:"s",e:4,v:5,p:3,lead:"Mass Save (utility consortium)",note:"ACEEE #2 nationally. Among the most generous and best-funded commercial programs in the country, a multi-year plan with deep budgets and a custom path with strong implementer support."},
+  {n:"Colorado",ab:"CO",tier:"s",e:4,v:4,p:3,lead:"Xcel Energy custom efficiency",note:"ACEEE top 10, recently improved. Mature Xcel custom program comfortable with non-standard measures."},
+  {n:"Minnesota",ab:"MN",tier:"s",e:4,v:4,p:3,lead:"Xcel / Conservation Improvement Program",note:"ACEEE top 10. The long-standing CIP framework makes custom savings routine; one Xcel relationship can serve CO and MN."},
+  {n:"Maryland",ab:"MD",tier:"s",e:3,v:4,p:3,lead:"EmPOWER Maryland",note:"ACEEE #4. EmPOWER MD runs well-funded multi-year commercial programs with a custom path."},
+  {n:"Vermont",ab:"VT",tier:"s",e:3,v:4,p:3,lead:"Efficiency Vermont",note:"ACEEE top 5. Statewide efficiency utility, well-run custom programs; small market, high quality."},
+  {n:"Washington",ab:"WA",tier:"s",e:3,v:4,p:3,lead:"Puget Sound Energy and others",note:"ACEEE top 10. Strong utility custom programs; Bonneville influence gives mature M&V practice."},
+  {n:"Oregon",ab:"OR",tier:"s",e:3,v:4,p:3,lead:"Energy Trust of Oregon",note:"ACEEE top 10. Energy Trust runs a well-regarded custom track with solid contractor support."},
+  {n:"New Jersey",ab:"NJ",tier:"s",e:3,v:4,p:3,lead:"NJ Clean Energy Program",note:"ACEEE top 10, much improved. Well-funded commercial custom track with strong policy backing."},
+  {n:"Connecticut",ab:"CT",tier:"s",e:3,v:4,p:3,lead:"Energize CT",note:"ACEEE upper tier. Established Northeast custom program and documentation rigor."},
+  {n:"Rhode Island",ab:"RI",tier:"s",e:3,v:4,p:3,lead:"Rhode Island Energy",note:"ACEEE upper tier. Generous Northeast structure similar to Mass Save."},
+  {n:"Maine",ab:"ME",tier:"s",e:3,v:4,p:3,lead:"Efficiency Maine",note:"ACEEE upper tier, much improved. Strong custom and prescriptive commercial programs."},
+  {n:"Michigan",ab:"MI",tier:"s",e:3,v:4,p:3,lead:"DTE Energy, Consumers Energy",note:"ACEEE mid-upper. Both major utilities run solid commercial custom programs."},
+  {n:"Wisconsin",ab:"WI",tier:"s",e:3,v:4,p:3,lead:"Focus on Energy",note:"ACEEE mid-upper. A well-run statewide program with a clear custom path."},
+  {n:"Pennsylvania",ab:"PA",tier:"s",e:3,v:4,p:3,lead:"Act 129 utility programs",note:"ACEEE mid. Act 129 mandates utility commercial programs with custom options; a recent top investment state."},
+
+  {n:"Arizona",ab:"AZ",tier:"m",e:3,v:3,p:3,lead:"APS, Tucson Electric Power",note:"Utility commercial programs exist with custom paths, though savings targets are modest."},
+  {n:"New Mexico",ab:"NM",tier:"m",e:3,v:3,p:3,lead:"PNM",note:"Utility programs with custom options; moderate funding."},
+  {n:"New Hampshire",ab:"NH",tier:"m",e:3,v:3,p:3,lead:"NHSaves",note:"Northeast program, moderate scale, custom path available."},
+  {n:"Nevada",ab:"NV",tier:"m",e:3,v:3,p:3,lead:"NV Energy",note:"NV Energy runs commercial custom incentives; moderate budgets."},
+  {n:"Utah",ab:"UT",tier:"m",e:3,v:3,p:3,lead:"Rocky Mountain Power Wattsmart",note:"Wattsmart Business runs a clear custom path; pays per annual kWh capped near 70% of cost with a payback screen."},
+  {n:"Idaho",ab:"ID",tier:"m",e:3,v:3,p:3,lead:"Idaho Power, Rocky Mountain Power",note:"Utility custom programs exist; moderate scale."},
+  {n:"Hawaii",ab:"HI",tier:"m",e:3,v:3,p:3,lead:"Hawaii Energy",note:"Statewide program; very high electricity rates make savings valuable, though budgets are modest."},
+  {n:"Delaware",ab:"DE",tier:"m",e:3,v:3,p:3,lead:"Energize Delaware",note:"Moderate commercial program with custom options."},
+  {n:"Missouri",ab:"MO",tier:"m",e:3,v:3,p:3,lead:"Ameren Missouri, Evergy (MEEIA)",note:"MEEIA-authorized utility programs with custom paths; a recent top investment state."},
+  {n:"Arkansas",ab:"AR",tier:"m",e:3,v:3,p:3,lead:"Entergy Arkansas and others",note:"Comparatively strong commercial programs for the region, custom path available."},
+  {n:"Indiana",ab:"IN",tier:"m",e:3,v:3,p:3,lead:"Duke Indiana, AES, others",note:"Utility custom programs exist; Duke Indiana custom cap is lower (50% of incremental cost) than the Carolinas."},
+  {n:"Iowa",ab:"IA",tier:"m",e:3,v:3,p:3,lead:"MidAmerican, Alliant",note:"Programs exist but were curtailed by a 2018 spending cap; verify current custom availability."},
+
+  {n:"Ohio",ab:"OH",tier:"w",e:2,v:3,p:2,lead:"Limited (post-EERS repeal)",note:"Ohio repealed its efficiency resource standard in 2019, sharply reducing mandatory utility programs. Some offerings remain; confirm before investing time."},
+  {n:"Georgia",ab:"GA",tier:"w",e:2,v:3,p:2,lead:"Georgia Power (limited)",note:"Georgia Power runs limited commercial rebates; no strong state mandate."},
+  {n:"Virginia",ab:"VA",tier:"w",e:2,v:3,p:2,lead:"Dominion (improving under VCEA)",note:"Programs expanding under the Virginia Clean Economy Act but still mid-low. Verify custom availability."},
+  {n:"Louisiana",ab:"LA",tier:"w",e:2,v:3,p:2,lead:"Entergy, Cleco (improving)",note:"ACEEE most-improved but still ranks low (about 37). Utility programs are growing; confirm custom path."},
+  {n:"Montana",ab:"MT",tier:"w",e:2,v:3,p:2,lead:"NorthWestern Energy",note:"Limited commercial programs; modest budgets."},
+  {n:"Florida",ab:"FL",tier:"w",e:2,v:2,p:2,lead:"FPL, Duke FL (very low targets)",note:"Large utilities but historically very low PSC savings goals, so custom incentives are thin. Low priority despite market size."},
+  {n:"Tennessee",ab:"TN",tier:"w",e:2,v:2,p:2,lead:"TVA territory",note:"No state mandate; TVA and local power companies offer limited commercial incentives."},
+  {n:"Alabama",ab:"AL",tier:"w",e:2,v:2,p:2,lead:"Alabama Power, TVA",note:"No state mandate; minimal commercial efficiency incentives."},
+  {n:"Kentucky",ab:"KY",tier:"w",e:2,v:2,p:2,lead:"LG&E/KU, TVA",note:"Limited programs; no strong mandate."},
+  {n:"Mississippi",ab:"MS",tier:"w",e:2,v:2,p:2,lead:"Entergy MS, Mississippi Power",note:"Minimal commercial programs; low targets."},
+  {n:"Kansas",ab:"KS",tier:"w",e:2,v:2,p:2,lead:"Evergy (limited)",note:"Limited commercial efficiency offerings; no mandate."},
+  {n:"Oklahoma",ab:"OK",tier:"w",e:2,v:2,p:2,lead:"OG&E, PSO",note:"Modest utility programs; low targets."},
+  {n:"Nebraska",ab:"NE",tier:"w",e:2,v:2,p:2,lead:"Public power districts",note:"Public-power state with limited, utility-by-utility incentives; no statewide mandate."},
+  {n:"West Virginia",ab:"WV",tier:"w",e:1,v:2,p:2,lead:"Appalachian Power (minimal)",note:"Among the weakest program environments; minimal commercial incentives."},
+  {n:"North Dakota",ab:"ND",tier:"w",e:1,v:2,p:2,lead:"Minimal",note:"No mandate; very limited utility programs."},
+  {n:"South Dakota",ab:"SD",tier:"w",e:1,v:2,p:2,lead:"Minimal",note:"No mandate; very limited utility programs."},
+  {n:"Alaska",ab:"AK",tier:"w",e:1,v:2,p:2,lead:"Minimal",note:"No statewide commercial efficiency structure; case-by-case only."},
+  {n:"Wyoming",ab:"WY",tier:"w",e:1,v:2,p:2,lead:"Rocky Mountain Power (minimal)",note:"ACEEE last nationally. Very low targets; minimal commercial opportunity."}
+];
+
+// ---------- compute + sort ----------
+states.forEach(s=>s.score=s.e*s.v*s.p);
+targets.forEach(t=>t.score=t.c*t.t);
+const tierRank={v:0,s:1,m:2,w:3};
+states.sort((a,b)=>b.score-a.score||tierRank[a.tier]-tierRank[b.tier]||((b.home?1:0)-(a.home?1:0))||a.n.localeCompare(b.n));
+targets.sort((a,b)=>b.score-a.score||b.t-a.t||a.n.localeCompare(b.n));
+const tierName={v:"Verified",s:"Strong program",m:"Moderate program",w:"Weak / none"};
+
+// ---------- render target playbook ----------
+const tg=document.getElementById('targets');
+targets.forEach((t,i)=>{
+  const d=document.createElement('div'); d.className='tgt';
+  d.innerHTML=`<div class="tt"><div><span class="trk">#${i+1}</span> <span class="tn">${t.n}</span></div><div class="tscore">${t.score}</div></div>`+
+    `<div class="tmeta">Conversation ${t.c}/5 &times; Tech fit ${t.t}/5 &middot; <b>${t.lead}</b> &middot; Energy use: ${t.kwh}</div>`+
+    `<div class="twhy">${t.why}</div>`;
+  tg.appendChild(d);
+});
+
+// ---------- meters ----------
+function meter(label,score){
+  let segs='';
+  const cls = score>=4?'hi':(score===3?'mid':'lo');
+  for(let i=1;i<=5;i++){ segs+=`<span class="${i<=score?('on '+cls):''}"></span>`; }
+  return `<div class="meter"><span class="mlabel">${label}</span><span class="segs">${segs}</span><span class="mnum">${score}</span></div>`;
+}
+
+// ---------- render states ----------
+const list=document.getElementById('list');
+states.forEach((s,i)=>{
+  const acc=document.createElement('details'); acc.className='acc t-'+s.tier; acc.id='st-'+s.ab;
+  // header
+  let header=`<summary><div class="acchead">`+
+    `<div class="ahleft"><div class="ahrank">Rank ${i+1} of 50${s.home?' &middot; Home market':''}</div>`+
+    `<div class="ahname">${s.n}${s.home?' <span class="ahhome">&middot; home</span>':''}</div>`+
+    `<span class="ahbadge t-${s.tier}">${tierName[s.tier]}</span></div>`+
+    `<div class="ahright"><div class="ahscore">${s.score}</div><div class="ahscorelab">Score</div></div>`+
+    `</div>`+
+    `<div class="meters">${meter('Ease',s.e)}${meter('Value',s.v)}${meter('Profit',s.p)}</div>`+
+    `<div class="ahopen"></div></summary>`;
+  // body
+  let body='<div class="accbody">';
+  if(s.tier==='v'){
+    body+=row('Savings basis',s.basis);
+    body+=row('What to do to qualify',s.qualify);
+    body+=row('Measurement',s.measure);
+    body+=row('The formula',s.formula);
+    body+=rowc('pay','Time to payment',s.pay);
+    body+=rowc('pay','Money upfront',s.upfront);
+    body+=rowc('watch','Watch out',s.watch);
+    // nested master plan
+    body+=`<details class="plan"><summary>Master plan: where to start, checklist, who to pursue</summary><div class="planbody">`+
+      `<div class="pstart"><b>Where to start.</b> ${s.plan.start}</div>`+
+      `<div class="plabel">The checklist</div><ol class="checklist">`+
+      s.plan.checklist.map(c=>`<li>${c}</li>`).join('')+`</ol>`+
+      `<div class="plabel">Who to pursue first</div><div class="ptargets"><div class="ptn">${s.plan.targetNote}</div></div>`+
+      `</div></details>`;
+  } else {
+    body+=row('Program strength',s.note);
+    body+=row('Measurement','Same as the framework near the top: log power before and after, multiply by hours, sample to 90/10, get pre-approved before work. The dollars and timing are what vary and are unconfirmed for this state.');
+    body+=`<details class="plan"><summary>Master plan: where to start, checklist, who to pursue</summary><div class="planbody">`+
+      `<div class="pstart"><b>Where to start.</b> Confirm a commercial custom or measured path is open to non-residential customers, then register as a trade ally or service provider before pursuing sites.</div>`+
+      `<div class="plabel">The checklist</div><ol class="checklist">`+
+      ['Confirm the program is currently open and funded','Register as a trade ally or service provider and carry required insurance','Request any free facility assessment the program offers','Submit pre-approval with the savings calc and M&V plan before work','Install and run the before-and-after metering','Submit final documentation','Collect, then confirm the actual payment timing'].map(c=>`<li>${c}</li>`).join('')+`</ol>`+
+      `<div class="plabel">Who to pursue first</div><div class="ptn">Use the Target Customer Playbook near the top. Tech fit is the same in every state, so the order holds; what changes is the program threshold. Confirm this program's kWh minimums and any upfront option before prioritizing for fast cash.</div>`+
+      `<div class="verify"><b>Confirm before acting:</b><ul>`+
+      `<li>Whether a commercial custom or measured path is open to non-residential customers</li>`+
+      `<li>The custom rate per kWh, or the percent-of-cost cap</li>`+
+      `<li>Payment timing and any upfront or early-commitment option</li>`+
+      `<li>Service provider registration and insurance requirements</li>`+
+      `<li>Whether large customers can opt out of the efficiency rider</li></ul></div>`+
+      `<div class="prov-note">Provisional score, based on ACEEE 2025 program strength and known regulatory structure. Not a verified read of this state's rates or timing.</div>`+
+      `</div></details>`;
+  }
+  body+='</div>';
+  acc.innerHTML=header+body;
+  list.appendChild(acc);
+});
+
+function row(k,v){return `<div class="row"><div class="k">${k}</div><div class="val">${v||''}</div></div>`;}
+function rowc(c,k,v){return `<div class="row ${c}"><div class="k">${k}</div><div class="val">${v||''}</div></div>`;}
+</script>
+</body>
+</html>
